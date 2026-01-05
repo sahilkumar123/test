@@ -1,11 +1,7 @@
-# Use an official Python runtime as a parent image
-FROM python:3.11-slim
+FROM public.ecr.aws/lambda/python:3.11
 
-# Set the working directory in the container
-WORKDIR /app
+# Copy function code
+COPY app/code.py ${LAMBDA_TASK_ROOT}
 
-# Copy the current directory contents into the container at /app
-COPY app /app
-
-# Run code.py when the container launches
-CMD ["python", "code.py"]
+# Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
+CMD [ "code.handler" ]
